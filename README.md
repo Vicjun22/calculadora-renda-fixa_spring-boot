@@ -26,7 +26,11 @@ Para este projeto, será utilizado o Java com Spring Boot e Swagger para realiza
 | ----------- | ------ | ------------------------------------------------------------------ |
 | JAVA        | JDK 17 | https://docs.oracle.com/en/java/javase/17/                         |
 | Spring Boot | 3.3.3  | https://github.com/spring-projects/spring-boot/releases/tag/v3.3.3 |
-| Swagger     |        |                                                                    |
+| Swagger     | 2.5.0  | https://springdoc.org/#Introduction                                |
 
 ### Spring Initializr
 O projeto Spring Boot foi criado à partir da plataforma [Spring Initializr](https://start.spring.io/), a versão que será utilizada é a versão recomendada no momento, dia 08/09/2024, talvez tenham mudanças futuras à esta data (exemplo de mudanças: a versão recomendada ser outra).
+
+### Contract-First em REST com Swagger
+Para o projeto foi utilizado o Swagger, o modelo adotado foi o Contract-First onde, há documento .yml dentro da pasta _resources_ contendo a chamada do endpoint no Swagger. Para acessar o swagger basta acessar o link: http://localhost:8080/swagger-ui/index.html.
+A escrita e revisão do Swagger foi definida através do link do Swagger Editor: https://editor.swagger.io/.

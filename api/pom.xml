@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.3.3</version>
+		<relativePath/>
+	</parent>
+
+	<groupId>com.calculadora.renda.fixa</groupId>
+	<artifactId>di</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<name>Calculo do Fator de DI</name>
+	<description>
+		O objetivo deste projeto é replicar, utilizando a linguagem JAVA, o cálculo do fator de DI, acumulado entre duas datas.
+		Cálculo já existente e realizado pela calculadora de renda fixa da B3.
+	</description>
+
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer>
+			<id>Victor</id>
+			<name>Victor Elias Ross Júnior</name>
+			<email>vicjun22@gmail.com</email>
+			<url>https://github.com/Vicjun22</url>
+		</developer>
+	</developers>
+
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+
+	<dependencies>
+		<!-- dependência para o desenvolvimento de aplicações web com Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- dependência para testes (inclui JUnit e Mockito) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- dependência do lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- dependência para documentação de APIs usando OpenAPI -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
+		<!-- dependência para validação de dados -->
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>7.8.0</version>
+				<executions>
+					<execution>
+						<id>contract.yml</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<skipValidateSpec>true</skipValidateSpec>
+							<inputSpec>./src/main/resources/swagger/contract.yml</inputSpec>
+							<generatorName>spring</generatorName>
+							<configOptions>
+								<openApiNullable>false</openApiNullable>
+								<interfaceOnly>true</interfaceOnly>
+								<useJakartaEe>true</useJakartaEe>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>7.8.0</version>
+
+				<executions>
+					<execution>
+						<id>contract.yml</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+
+						<configuration>
+							<skipValidateSpec>true</skipValidateSpec>
+							<inputSpec>./src/main/resources/swagger/contract.yml</inputSpec>
+							<generatorName>spring</generatorName>
+							<apiPackage>com.calculadora.renda.fixa.di.api</apiPackage>
+							<modelPackage>com.calculadora.renda.fixa.di.model</modelPackage>
+							<configOptions>
+								<openApiNullable>false</openApiNullable>
+								<interfaceOnly>true</interfaceOnly>
+								<useJakartaEe>true</useJakartaEe>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
