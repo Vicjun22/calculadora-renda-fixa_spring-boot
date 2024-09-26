@@ -10,4 +10,8 @@ class CalculoDoFatorDeDiApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void applicationStarts() {
+		ApiApplication.main(new String[] {});
+	}
 }
