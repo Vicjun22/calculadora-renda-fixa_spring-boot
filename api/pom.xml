@@ -91,29 +91,6 @@
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
 				<version>7.8.0</version>
-				<executions>
-					<execution>
-						<id>contract.yml</id>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<skipValidateSpec>true</skipValidateSpec>
-							<inputSpec>./src/main/resources/swagger/contract.yml</inputSpec>
-							<generatorName>spring</generatorName>
-							<configOptions>
-								<openApiNullable>false</openApiNullable>
-								<interfaceOnly>true</interfaceOnly>
-								<useJakartaEe>true</useJakartaEe>
-							</configOptions>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.openapitools</groupId>
-				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>7.8.0</version>
 
 				<executions>
 					<execution>
