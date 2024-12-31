@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CalculoDIMapperTest {
+class CalculoDIMapperTest {
 
     @Test
     @DisplayName("Deve realizar cobertura de testes para o mapper")
