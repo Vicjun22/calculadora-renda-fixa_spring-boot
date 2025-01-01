@@ -41,6 +41,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>3.4.1</version>
 		</dependency>
 
 		<!-- dependência para testes (inclui JUnit e Mockito) -->
@@ -48,6 +49,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<version>3.4.1</version>
 		</dependency>
 
 		<!-- dependência do lombok -->
@@ -69,6 +71,13 @@
 			<groupId>jakarta.validation</groupId>
 			<artifactId>jakarta.validation-api</artifactId>
 			<version>3.0.2</version>
+		</dependency>
+
+		<!-- correções de vulnerabilidades -->
+		<dependency>
+			<groupId>org.xmlunit</groupId>
+			<artifactId>xmlunit-core</artifactId>
+			<version>2.10.0</version>
 		</dependency>
 	</dependencies>
 

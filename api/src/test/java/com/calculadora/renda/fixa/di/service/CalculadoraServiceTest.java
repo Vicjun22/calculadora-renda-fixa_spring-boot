@@ -72,7 +72,7 @@ class CalculadoraServiceTest {
         BigDecimal percentual = new BigDecimal("100");
         BigDecimal valor = new BigDecimal("1000");
 
-        when(consultarFeriados.buscarListaDeFeriados("2024")).thenReturn(List.of());
+        when(consultarFeriados.buscarListaDeFeriados(String.valueOf(LocalDate.now().getYear()))).thenReturn(List.of());
 
         List<TaxaSelicModel> taxaSelic = List.of(new TaxaSelicModel(LocalDate.now().minusDays(1L).toString(), "0.043739"));
 
