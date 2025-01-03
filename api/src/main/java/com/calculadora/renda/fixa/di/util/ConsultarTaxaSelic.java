@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,9 +28,9 @@ public class ConsultarTaxaSelic {
     public List<TaxaSelicModel> buscarListaDasTaxasSelic(LocalDate dataInicio, LocalDate dataFim) {
 
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String dataInicial = "&dataInicial=".concat(dataInicio.format(formatter));
-            String dataFinal = "&dataFinal=".concat(dataFim.format(formatter));
+            DateTimeFormatter formatterEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataInicial = "&dataInicial=".concat(dataInicio.format(formatterEntrada));
+            String dataFinal = "&dataFinal=".concat(dataFim.format(formatterEntrada));
 
             String url = BANCO_CENTRAL_DO_BRASIL_CONSULTA_SELIC_URL.concat(dataInicial).concat(dataFinal);
             ResponseEntity<TaxaSelicModel[]> responseEntity = restTemplate.getForEntity(url, TaxaSelicModel[].class);
@@ -38,7 +39,13 @@ public class ConsultarTaxaSelic {
                 parameterNotFound("Ocorreu um erro! Nenhuma taxa encontrada.");
             }
 
-            return List.of(responseEntity.getBody());
+            DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            return Arrays.stream(responseEntity.getBody())
+                    .peek(taxa -> {
+                        LocalDate dataConvertida = LocalDate.parse(taxa.getData(), formatterEntrada);
+                        taxa.setData(dataConvertida.format(formatterSaida));
+                    })
+                    .toList();
 
         } catch (NotFoundParameterException e) {
             throw e;

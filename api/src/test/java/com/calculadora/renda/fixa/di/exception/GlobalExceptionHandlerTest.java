@@ -34,6 +34,20 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    @DisplayName("Should handle RuntimeException correctly")
+    void shouldHandleRuntimeException() {
+        RuntimeException exception = new RuntimeException("Erro de parâmetro inválido");
+        ResponseEntity<Object> response = globalExceptionHandler.handlerExceptionResolver(exception);
+
+        assertTrue(response.getBody() instanceof Map);
+        @SuppressWarnings("unchecked")
+        Map<String, String> responseBody = (Map<String, String>) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Erro de parâmetro inválido", responseBody.get("erro"));
+    }
+
+    @Test
     @DisplayName("Should handle NotFoundParameterException correctly")
     void shouldHandleNotFoundParameterException() {
         NotFoundParameterException exception = new NotFoundParameterException("Erro de parâmetro não encontrado");

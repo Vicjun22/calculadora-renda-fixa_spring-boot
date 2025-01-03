@@ -23,6 +23,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
+    // BAD_REQUEST          400
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handlerExceptionResolver(RuntimeException exception) {
+        log.error(exception.getMessage(), exception.getCause());
+
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("erro", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
     // NOT_FOUND            404
     @ExceptionHandler(NotFoundParameterException.class)
     public ResponseEntity<Object> handlerExceptionResolver(NotFoundParameterException exception) {

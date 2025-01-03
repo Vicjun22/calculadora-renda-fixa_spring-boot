@@ -1,10 +1,9 @@
 package com.calculadora.renda.fixa.di.service;
 
-import com.calculadora.renda.fixa.di.domain.model.FeriadoModel;
 import com.calculadora.renda.fixa.di.domain.model.TaxaSelicModel;
 import com.calculadora.renda.fixa.di.model.CalculoDIResponse;
-import com.calculadora.renda.fixa.di.util.ConsultarFeriados;
-import com.calculadora.renda.fixa.di.util.ConsultarTaxaSelic;
+import com.calculadora.renda.fixa.di.repository.FeriadosRepository;
+import com.calculadora.renda.fixa.di.repository.TaxaSelicRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,10 +26,19 @@ class CalculadoraServiceTest {
     private CalculadoraService service;
 
     @Mock
-    private ConsultarTaxaSelic consultarTaxaSelic;
+    private FeriadosService feriadosService;
 
     @Mock
-    private ConsultarFeriados consultarFeriados;
+    private FeriadosRepository feriadosRepository;
+
+    @Mock
+    private TaxaSelicService taxaSelicService;
+
+    @Mock
+    private TaxaSelicRepository taxaSelicRepository;
+
+    CalculadoraServiceTest() {
+    }
 
     @Test
     @DisplayName("Deve realizar o cálculo do fator de DI com mocks de APIs externas")
@@ -40,18 +49,13 @@ class CalculadoraServiceTest {
         BigDecimal percentual = new BigDecimal("100");
         BigDecimal valor = new BigDecimal("1000");
 
-        List<FeriadoModel> feriados = List.of(
-                new FeriadoModel(LocalDate.of(2024, 1, 1), "Ano Novo", "national")
-        );
-        when(consultarFeriados.buscarListaDeFeriados("2024")).thenReturn(feriados);
-
         List<TaxaSelicModel> taxaSelic = List.of(
                 new TaxaSelicModel("2024-01-02", "0.043739"),
                 new TaxaSelicModel("2024-01-03", "0.043739"),
                 new TaxaSelicModel("2024-01-04", "0.043739"),
                 new TaxaSelicModel("2024-01-05", "0.043739")
         );
-        when(consultarTaxaSelic.buscarListaDasTaxasSelic(dataInicial, dataFinal)).thenReturn(taxaSelic);
+        when(taxaSelicRepository.listarTaxasPorPeriodo(any(), any())).thenReturn(taxaSelic);
 
         CalculoDIResponse response = service.calculoFatorDi(dataInicial, dataFinal, percentual, valor);
 
@@ -72,11 +76,10 @@ class CalculadoraServiceTest {
         BigDecimal percentual = new BigDecimal("100");
         BigDecimal valor = new BigDecimal("1000");
 
-        when(consultarFeriados.buscarListaDeFeriados(String.valueOf(LocalDate.now().getYear()))).thenReturn(List.of());
-
         List<TaxaSelicModel> taxaSelic = List.of(new TaxaSelicModel(LocalDate.now().minusDays(1L).toString(), "0.043739"));
 
-        when(consultarTaxaSelic.buscarListaDasTaxasSelic(dataInicial, dataFinal)).thenReturn(taxaSelic);
+        when(feriadosRepository.listarFeriadosPorAno(String.valueOf(LocalDate.now().getYear()))).thenReturn(List.of());
+        when(taxaSelicRepository.listarTaxasPorPeriodo(any(), any())).thenReturn(taxaSelic);
 
         CalculoDIResponse response = service.calculoFatorDi(dataInicial, dataFinal, percentual, valor);
 

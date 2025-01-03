@@ -41,7 +41,7 @@ public class ConsultarTaxaSelicTest {
                 "&dataInicial=" + dataInicio.format(FORMATTER) +
                 "&dataFinal=" + dataFim.format(FORMATTER);
 
-        TaxaSelicModel[] taxaSelicModels = {new TaxaSelicModel("2024-01-01", "13.65")};
+        TaxaSelicModel[] taxaSelicModels = {new TaxaSelicModel("01/01/2024", "13.65")};
         when(restTemplate.getForEntity(eq(url), eq(TaxaSelicModel[].class))).thenReturn(ResponseEntity.ok(taxaSelicModels));
 
         List<TaxaSelicModel> result = consultarTaxaSelic.buscarListaDasTaxasSelic(dataInicio, dataFim);

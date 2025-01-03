@@ -10,3 +10,6 @@ management:
   endpoint:
     health:
       show-details: always
+database:
+  file:
+    path: project.db

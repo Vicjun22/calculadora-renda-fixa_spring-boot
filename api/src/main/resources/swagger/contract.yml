@@ -95,4 +95,3 @@ components:
           type: number
           description: "Valor calculado"
           example: 1073.02
-
