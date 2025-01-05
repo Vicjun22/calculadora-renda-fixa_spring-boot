@@ -19,10 +19,4 @@ public class SQLiteUtil {
             statement.executeUpdate();
         }
     }
-
-    public ResultSet executeQuery(String sql) throws SQLException {
-        Connection connection = connect();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        return statement.executeQuery();
-    }
 }

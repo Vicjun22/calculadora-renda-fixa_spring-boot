@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,13 +27,25 @@ public class TaxaSelicService {
         TaxaSelicModel taxaSelicInicial = taxaSelicRepository.consultarUltimaDataInserida();
 
         List<FeriadoModel> feriados = Objects.requireNonNull(feriadosRepository.listarFeriadosPorAno(String.valueOf(LocalDate.now().getYear())));
-        List<FeriadoModel> feriadosNacionais = feriados.stream().filter(feriado -> feriado.getType().equals("national")).toList();
+        List<FeriadoModel> feriadosNacionais = feriados.stream().filter(feriado -> "national".equals(feriado.getType())).toList();
         LocalDate dataFinalEmDiaUtil = ajustarParaDiaUtil(LocalDate.now().minusDays(1), feriadosNacionais);
 
-        if (!taxaSelicInicial.getData().equals(String.valueOf(dataFinalEmDiaUtil))) {
-            List<TaxaSelicModel> novosDados = consultarTaxaSelic.buscarListaDasTaxasSelic(LocalDate.parse(taxaSelicInicial.getData()), dataFinalEmDiaUtil);
-            novosDados.remove(0);
-            taxaSelicRepository.inserirTaxasEmLote(novosDados);
+        taxaSelicInicial = (taxaSelicInicial == null) ? new TaxaSelicModel("2018-01-01", "0.026481") : taxaSelicInicial;
+
+        LocalDate dataTaxaInicial = LocalDate.parse(taxaSelicInicial.getData());
+
+        if (!dataTaxaInicial.equals(dataFinalEmDiaUtil)) {
+            List<TaxaSelicModel> novosDados = consultarTaxaSelic.buscarListaDasTaxasSelic(dataTaxaInicial, dataFinalEmDiaUtil);
+
+            if (novosDados != null && !novosDados.isEmpty()) {
+                novosDados = new ArrayList<>(novosDados);
+                novosDados.remove(0);
+            }
+
+            if (novosDados != null && !novosDados.isEmpty()) {
+                taxaSelicRepository.inserirTaxasEmLote(novosDados);
+            }
         }
     }
+
 }
