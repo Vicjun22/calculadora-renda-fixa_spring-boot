@@ -25,7 +25,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./api
+          context: ./
           push: true
           tags: vicross22/calculadora-renda:latest
 
