@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: Calculo do Fator de DI
+
+server:
+  port: 8080
+management:
+  server:
+    port: 9090
+  endpoint:
+    health:
+      show-details: always
+database:
+  file:
+    path: project.db

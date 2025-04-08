@@ -1,0 +1,97 @@
+openapi: 3.0.3
+
+info:
+  title: "Calculo do Fator de DI"
+  version: "1.0.0"
+  description:
+    "O objetivo deste projeto é replicar o cálculo de fator de DI realizado pelo site https://calculadorarendafixa.com.br/#/navbar/calculadora"
+
+servers:
+  - url: http://localhost:8080
+
+tags:
+  -   name: fatorDI
+      description: "Requisições referentes cálculo do fator de DI"
+
+paths:
+  /calcula-fator-di:
+    get:
+      tags:
+        - fatorDI
+      summary: "Realiza o cálculo do fator de DI"
+      operationId: calculo-fator-di
+      parameters:
+        - name: dataInicial
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: dataFinal
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: percentual
+          in: query
+          required: true
+          schema:
+            type: number
+        - name: valor
+          in: query
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: "OK!"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculoDIResponse'
+        400:
+          description: "Ocorreu um erro"
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    CalculoDIResponse:
+      type: object
+      properties:
+        indicador:
+          type: string
+          description: "Indicador da operação"
+          example: "DI"
+        dataInicial:
+          type: string
+          description: "Data de início da consulta"
+          example: "2024-01-01"
+        dataFinal:
+          type: string
+          description: "Data final da consulta"
+          example: "2024-01-01"
+        percentual:
+          type: string
+          description: "Percentual aplicado"
+          example: "120%"
+        fator:
+          type: number
+          description: "Fator de DI calculado"
+          example: 1.07302497
+        taxa:
+          type: string
+          description: "Taxa da operação consultada"
+          example: "7.30%"
+        valorBase:
+          type: number
+          description: "Valor inicial/base da operação"
+          example: 1000.00
+        valorCalculado:
+          type: number
+          description: "Valor calculado"
+          example: 1073.02
