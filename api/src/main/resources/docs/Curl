@@ -1,3 +1,0 @@
-curl -X 'GET' \
-  'http://localhost:8080/calcula-fator-di?dataInicial=2024-01-01&dataFinal=2024-12-30&percentual=108&valor=50000' \
-  -H 'accept: application/json'
